@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
@@ -16,6 +17,19 @@ import Button from '@/components/button';
 
 export default function Home() {
   const { address } = useAccount();
+  const [nfts, setNfts] = useState([]);
+
+  useEffect(() => {
+    async function fetchNfts() {
+      if (address) {
+        const res = await fetch(`/api/fetchNFTs?address=${address}`);
+        const data = await res.json();
+        setNfts(data);
+      }
+    }
+
+    fetchNfts();
+  }, [address]);
 
   return (
     <main className="flex-col items-center justify-between">
