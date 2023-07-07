@@ -18,7 +18,7 @@ export default function Home() {
   const { address } = useAccount();
 
   return (
-    <main className="flex-col items-center justify-between p-5">
+    <main className="flex-col items-center justify-between">
       <div className="flex flex-col items-center space-y-8">
         <Image width={300} src={Logo} alt="Hyphen Logo" />
         <Image width={300} src={AdoptAHiphen} alt="Hyphen Logo" />
@@ -37,12 +37,12 @@ export default function Home() {
             VIEW ON OPENSEA
           </Button>
         </div>
-        <div className="flex flex-col items-center space-y-6 rounded-3xl bg-black p-9">
+        <div className="flex w-full max-w-[38rem] flex-col items-center space-y-6 rounded-3xl bg-black p-9">
           <Image width={300} src={AdoptionTicket} alt="Hyphen Logo" />
           <div className="text-center text-xs text-white md:text-sm">
-            Approve your adoption tickets to enable redemption.
+            Mint an Adoption Ticket to get started!
           </div>
-          {!address ? <ConnectButton /> : <Button color="white">Adopt a Hyphen</Button>}
+          {!address ? <ConnectButton /> : <Button color="blue">Mint</Button>}
         </div>
       </div>
     </main>
