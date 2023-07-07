@@ -6,6 +6,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 
 import AdoptAHiphen from '@/public/adopt-a-hyphen.svg';
+import AdoptionTicket from '@/public/adoption-ticket.svg';
 import Logo from '@/public/hyphen-logo.svg';
 import Opensea from '@/public/opensea.svg';
 import Party from '@/public/party-vs-party.svg';
@@ -36,11 +37,12 @@ export default function Home() {
             VIEW ON OPENSEA
           </Button>
         </div>
-        <div className="flex flex-col items-center">
-          {!address ? <ConnectButton /> : <Button color="white">Adopt a Hyphen</Button>}
-          <div className="mt-4 text-center text-xs md:text-sm">
+        <div className="flex flex-col items-center space-y-6 rounded-3xl bg-black p-9">
+          <Image width={300} src={AdoptionTicket} alt="Hyphen Logo" />
+          <div className="text-center text-xs text-white md:text-sm">
             Approve your adoption tickets to enable redemption.
           </div>
+          {!address ? <ConnectButton /> : <Button color="white">Adopt a Hyphen</Button>}
         </div>
       </div>
     </main>
