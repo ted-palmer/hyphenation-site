@@ -12,7 +12,6 @@ import ZORA_ABI from '@/lib/abis/zora';
 
 import ApprovalBox from '@/components/approval-box';
 import Button from '@/components/common/button';
-import { ConnectButtonCustom } from '@/components/connect-button';
 import MintBox from '@/components/mint-box';
 
 export default function Home() {
@@ -56,7 +55,7 @@ export default function Home() {
           <Image width={383} src={AdoptAHiphen} alt="Hyphen Logo" />
         </div>
 
-        <div className="flex w-full max-w-[53rem] flex-col space-y-12 text-white">
+        <div className="flex w-full max-w-[53rem] flex-col space-y-12 font-inter text-white">
           <span>
             With each passing day, more and more people are switching from “on-chain” to “onchain.”
             While this may seem like a harmless choice, thousands of innocent hyphens are losing
@@ -74,7 +73,7 @@ export default function Home() {
           </span>
         </div>
 
-        <div className="flex items-center justify-center rounded-lg border border-black bg-white p-2 text-sm text-black">
+        <div className="flex items-center justify-center rounded-lg border border-black bg-white p-2 font-martian text-sm text-black">
           {/* Hyphens Saved */}
           {/* @TODO fix type */}
           <div className="mr-2.5 flex items-center justify-center rounded bg-black p-1 px-3 text-[#00BA73]">

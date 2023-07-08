@@ -8,8 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#00C9FF"
-      }
+        background: '#00C9FF',
+      },
+      fontFamily: {
+        inter: ['var(--inter-font)'],
+        martian: ['var(--martian-mono-font)'],
+      },
     },
   },
 };

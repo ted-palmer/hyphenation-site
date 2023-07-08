@@ -82,7 +82,7 @@ const MintBox = () => {
   });
 
   return (
-    <div className="flex w-full max-w-[38rem] flex-col items-center space-y-6 rounded-3xl bg-black p-6">
+    <div className="flex w-full max-w-[38rem] flex-col items-center space-y-6 rounded-3xl bg-black p-6 font-martian">
       <Image width={300} src={AdoptionTicket} alt="Hyphen Logo" />
       <div className="text-center text-xs text-white md:text-sm">
         Mint an Adoption Ticket to get started!

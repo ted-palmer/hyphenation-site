@@ -12,6 +12,7 @@ type ButtonProps = JSX.IntrinsicElements['button'] & {
 const buttonVariants = cva(
   [
     'rounded-xl',
+    'font-martian',
     'border',
     'border-transparent',
     'px-8',

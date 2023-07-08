@@ -1,15 +1,15 @@
-import { Martian_Mono } from 'next/font/google';
+import { Inter, Martian_Mono } from 'next/font/google';
 
 import './globals.css';
 import { Providers } from './providers';
-import clsx from 'clsx';
 
 import { Toaster } from '@/components/common/toaster';
 import Footer from '@/components/footer';
 import Navbar from '@/components/nav-bar';
 
 /* Fonts */
-const martianMono = Martian_Mono({ subsets: ['latin'] });
+export const martianMono = Martian_Mono({ subsets: ['latin'], variable: '--martian-mono-font' });
+export const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 /* Metadata & SEO */
 export const metadata = {
@@ -19,8 +19,8 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={clsx(martianMono.className, 'bg-background')}>
+    <html lang="en" className={`${inter.variable} ${martianMono.variable}`}>
+      <body className={'bg-background'}>
         <Providers>
           <Navbar />
           <Toaster />
