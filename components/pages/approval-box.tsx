@@ -2,21 +2,16 @@
 
 import { useState } from 'react';
 
-import { useToast } from '../hooks/useToast';
-import Button from './common/button';
-import {
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from 'wagmi';
+import { useToast } from '@/hooks/useToast';
+import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 
 import ZORA_ABI from '@/lib/abis/zora';
+
+import Button from '@/components/common/button';
 
 const ApprovalBox = () => {
   const [isApprovedForAll, setIsApprovedForAll] = useState(false);
 
-  const { address } = useAccount();
   const { toast } = useToast();
 
   /* Contract interaction */
@@ -28,13 +23,7 @@ const ApprovalBox = () => {
     chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
-  const {
-    isLoading: walletIsLoading,
-    isSuccess: walletIsSuccess,
-    data,
-    write,
-    reset,
-  } = useContractWrite({
+  const { data, write, reset } = useContractWrite({
     ...config,
     onError: () => {
       toast({

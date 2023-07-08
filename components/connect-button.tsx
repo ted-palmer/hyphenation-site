@@ -36,20 +36,20 @@ export const ConnectButtonCustom = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Button color="white" onClick={openConnectModal} type="button">
+                  <Button size="sm" color="white" onClick={openConnectModal} type="button">
                     Connect Wallet
                   </Button>
                 );
               }
               if (chain.unsupported) {
                 return (
-                  <Button color="white" onClick={openChainModal} type="button">
+                  <Button size="sm" color="white" onClick={openChainModal} type="button">
                     Wrong network
                   </Button>
                 );
               }
               return (
-                <Button color="white" onClick={openAccountModal} type="button">
+                <Button size="sm" color="white" onClick={openAccountModal} type="button">
                   {account.displayName}
                   {account.displayBalance ? ` (${account.displayBalance})` : ''}
                 </Button>

@@ -7,6 +7,7 @@ type ButtonProps = JSX.IntrinsicElements['button'] & {
   className?: string;
   href?: string;
   isIcon?: boolean;
+  size?: 'sm' | 'lg';
 };
 
 const buttonVariants = cva(
@@ -48,6 +49,7 @@ const Button = ({
   href,
   isIcon,
   onClick,
+  size = 'lg',
   ...props
 }: ButtonProps) => {
   return (

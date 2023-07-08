@@ -10,9 +10,9 @@ import Logo from '@/public/hyphen-logo.svg';
 
 import ZORA_ABI from '@/lib/abis/zora';
 
-import ApprovalBox from '@/components/approval-box';
 import Button from '@/components/common/button';
-import MintBox from '@/components/mint-box';
+import ApprovalBox from '@/components/pages/approval-box';
+import MintBox from '@/components/pages/mint-box';
 
 export default function Home() {
   const { address } = useAccount();
@@ -52,7 +52,7 @@ export default function Home() {
       <div className="flex flex-col items-center space-y-9 sm:space-y-12">
         <div className="w-[16.5rem] space-y-9 sm:w-[24rem] sm:space-y-12">
           <Image width={383} src={Logo} alt="Hyphen Logo" />
-          <Image width={383} src={AdoptAHiphen} alt="Hyphen Logo" />
+          <Image width={383} src={AdoptAHiphen} alt="adope a hyphen logo" />
         </div>
 
         <div className="flex w-full max-w-[53rem] flex-col space-y-12 font-inter text-white">
