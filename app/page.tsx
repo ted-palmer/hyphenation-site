@@ -19,25 +19,27 @@ import MintBox from '@/components/mint-box';
 
 export default function Home() {
   const { address } = useAccount();
-  const [nfts, setNfts] = useState([]);
+  const [nfts, setNfts] = useState<any[]>([]); // TODO: Type this
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     async function fetchNfts() {
       if (address) {
         const res = await fetch(`/api/fetchNFTs?address=${address}`);
         const data = await res.json();
-        setNfts(data);
+        setNfts(data.ownedNfts);
+        console.log(data.ownedNfts);
       }
+
+      setIsLoaded(true);
     }
 
     fetchNfts();
   }, [address]);
 
-  const ownsHyphen = true;
-
   return (
     <main className="flex-col items-center justify-between">
-      <div className="flex flex-col items-center space-y-8">
+      <div className="flex flex-col items-center space-y-12">
         <Image width={300} src={Logo} alt="Hyphen Logo" />
         <Image width={300} src={AdoptAHiphen} alt="Hyphen Logo" />
         <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
@@ -67,7 +69,26 @@ export default function Home() {
           </Button>
         </div>
         {/* Mint/Approval a hyphen box */}
-        {!ownsHyphen ? <MintBox /> : <ApprovalBox />}
+        {nfts.length === 0 ? <MintBox /> : <ApprovalBox />}
+
+        {/* NFTs */}
+        {isLoaded && nfts.length > 0 && (
+          <div className="grid gap-24 md:grid-cols-3 lg:grid-cols-4">
+            {nfts.map((nft) => {
+              return (
+                <div key={nft.id.tokenId}>
+                  <Image
+                    className="rounded-xl"
+                    width={300}
+                    height={300}
+                    src={nft.media[0].gateway}
+                    alt={nft.name}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </main>
   );

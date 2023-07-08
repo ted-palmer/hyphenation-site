@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={clsx(martianMono.className, 'bg-background')}>
         <Providers>
-          <div className={'mx-auto w-full max-w-[60rem] grow p-4 md:px-20 md:py-16'}>
+          <div className={'mx-auto w-full max-w-[100rem] grow p-4 md:px-20 md:py-16'}>
             {children}
           </div>
         </Providers>
