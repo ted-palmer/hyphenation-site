@@ -26,7 +26,7 @@ const buttonVariants = cva(
   {
     variants: {
       color: {
-        blue: 'bg-background text-white hover:bg-blue-600 active:bg-blue-700',
+        blue: 'bg-background text-white hover:bg-[#008EB5] active:bg-[#006884]',
         white: 'bg-white text-black hover:bg-gray-100 active:bg-gray-200',
         black: 'bg-black text-white hover:bg-gray-800 active:bg-gray-900',
         transparent: 'bg-transparent',

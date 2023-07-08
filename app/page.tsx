@@ -12,6 +12,7 @@ import ZORA_ABI from '@/lib/abis/zora';
 
 import ApprovalBox from '@/components/approval-box';
 import Button from '@/components/common/button';
+import { ConnectButtonCustom } from '@/components/connect-button';
 import MintBox from '@/components/mint-box';
 
 export default function Home() {
@@ -20,12 +21,7 @@ export default function Home() {
   const [nfts, setNfts] = useState<any[]>([]); // TODO: Type this
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const {
-    data: isApprovedForAll,
-    isError,
-    isLoading,
-    refetch,
-  } = useContractRead({
+  const { data: isApprovedForAll } = useContractRead({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
     functionName: 'isApprovedForAll',
@@ -60,7 +56,7 @@ export default function Home() {
           <Image width={383} src={AdoptAHiphen} alt="Hyphen Logo" />
         </div>
 
-        <div className="flex w-full max-w-[53rem] flex-col space-y-12 text-white sm:text-lg">
+        <div className="flex w-full max-w-[53rem] flex-col space-y-12 text-white">
           <span>
             With each passing day, more and more people are switching from “on-chain” to “onchain.”
             While this may seem like a harmless choice, thousands of innocent hyphens are losing
@@ -70,7 +66,7 @@ export default function Home() {
             <br />
             <br />
             Introducing the Adopt-a-Hyphen program. For the next 3 days, you can adopt a hyphen and
-            give it a new home…right in your wallet! To adopt a hyphen, simply mint an Adoption
+            give it a new home...right in your wallet! To adopt a hyphen, simply mint an Adoption
             Ticket. Each Adoption Ticket can be redeemed to adopt one hyphen. As is their nature,
             each hyphen lives fully on-chain and is rendered in solidity as cute, generative ASCII
             art. Upon redeeming your Adoption Ticket, you’ll enjoy the surprise of finding out what
