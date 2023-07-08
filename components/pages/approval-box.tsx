@@ -40,7 +40,7 @@ const ApprovalBox = () => {
     },
   });
 
-  const { isLoading: txIsLoading, isSuccess: txIsSuccess } = useWaitForTransaction({
+  useWaitForTransaction({
     hash: data?.hash,
     onError: () => {
       toast({

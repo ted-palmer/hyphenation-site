@@ -11,7 +11,7 @@ import {
   ToastViewport,
 } from '@/components/common/toast';
 
-export function Toaster() {
+export default function Toaster() {
   const { toasts } = useToast();
 
   return (

@@ -1,11 +1,12 @@
 import { Inter, Martian_Mono } from 'next/font/google';
 
 import './globals.css';
-import { Providers } from './providers';
 
-import { Toaster } from '@/components/common/toaster';
+import Toaster from '@/components/common/toaster';
 import Footer from '@/components/footer';
 import Navbar from '@/components/nav-bar';
+
+import Providers from '@/app/providers';
 
 /* Fonts */
 const martianMono = Martian_Mono({ subsets: ['latin'], variable: '--martian-mono-font' });
