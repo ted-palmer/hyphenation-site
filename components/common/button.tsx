@@ -5,6 +5,7 @@ type ButtonProps = JSX.IntrinsicElements['button'] & {
   color?: 'blue' | 'white' | 'black';
   leftIcon?: React.ReactNode;
   className?: string;
+  href?: string;
 };
 
 const buttonVariants = cva(
@@ -36,9 +37,21 @@ const buttonVariants = cva(
   },
 );
 
-const Button = ({ children, color = 'black', leftIcon, className, ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  color = 'black',
+  leftIcon,
+  className,
+  href,
+  onClick,
+  ...props
+}: ButtonProps) => {
   return (
-    <button className={twMerge(buttonVariants({ color, size: 'lg' }), className)} {...props}>
+    <button
+      onClick={href ? () => window.open(href, '_blank') : onClick}
+      className={twMerge(buttonVariants({ color, size: 'lg' }), className)}
+      {...props}
+    >
       {leftIcon ? <span className="mr-2">{leftIcon}</span> : null}
       {children}
     </button>
