@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { useAccount } from 'wagmi';
+import { mainnet, useAccount, useContractRead, useNetwork } from 'wagmi';
 
 import AdoptAHiphen from '@/public/adopt-a-hyphen.svg';
 import Logo from '@/public/hyphen-logo.svg';
@@ -11,6 +11,7 @@ import Opensea from '@/public/opensea.svg';
 import Party from '@/public/party-vs-party.svg';
 import Zora from '@/public/zora.svg';
 
+import ZORA_ABI from '@/lib/abis/zora';
 import LINKS from '@/lib/constants/links';
 
 import ApprovalBox from '@/components/approval-box';
@@ -19,8 +20,21 @@ import MintBox from '@/components/mint-box';
 
 export default function Home() {
   const { address } = useAccount();
+  const { chain } = useNetwork();
   const [nfts, setNfts] = useState<any[]>([]); // TODO: Type this
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const {
+    data: isApprovedForAll,
+    isError,
+    isLoading,
+    refetch,
+  } = useContractRead({
+    address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
+    abi: ZORA_ABI,
+    functionName: 'isApprovedForAll',
+    args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+  });
 
   useEffect(() => {
     async function fetchNfts() {
@@ -35,7 +49,7 @@ export default function Home() {
     }
 
     fetchNfts();
-  }, [address]);
+  }, [address, chain]);
 
   return (
     <main className="flex-col items-center justify-between">
@@ -69,7 +83,11 @@ export default function Home() {
           </Button>
         </div>
         {/* Mint/Approval a hyphen box */}
-        {nfts.length === 0 ? <MintBox /> : <ApprovalBox />}
+        {nfts.length != 0 || chain?.id != mainnet.id ? (
+          <MintBox />
+        ) : isApprovedForAll ? (
+          <ApprovalBox />
+        ) : null}
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (
