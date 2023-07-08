@@ -38,15 +38,12 @@ export default function Home() {
     functionName: 'totalSupply',
   });
 
-  console.log(totalSupply);
-
   useEffect(() => {
     async function fetchNfts() {
       if (address) {
         const res = await fetch(`/api/fetchNFTs?address=${address}`);
         const data = await res.json();
         setNfts(data.ownedNfts);
-        console.log(data.ownedNfts);
       }
 
       setIsLoaded(true);
