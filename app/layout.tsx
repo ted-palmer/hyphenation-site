@@ -8,8 +8,8 @@ import Footer from '@/components/footer';
 import Navbar from '@/components/nav-bar';
 
 /* Fonts */
-export const martianMono = Martian_Mono({ subsets: ['latin'], variable: '--martian-mono-font' });
-export const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const martianMono = Martian_Mono({ subsets: ['latin'], variable: '--martian-mono-font' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 /* Metadata & SEO */
 export const metadata = {
