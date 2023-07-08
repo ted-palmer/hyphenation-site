@@ -83,7 +83,7 @@ export default function Home() {
           </Button>
         </div>
         {/* Mint/Approval a hyphen box */}
-        {nfts.length != 0 || chain?.id != mainnet.id ? (
+        {nfts.length === 0 || chain?.id != mainnet.id ? (
           <MintBox />
         ) : isApprovedForAll ? (
           <ApprovalBox />
