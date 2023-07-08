@@ -76,7 +76,10 @@ export default function Home() {
           <div className="grid gap-24 md:grid-cols-3 lg:grid-cols-4">
             {nfts.map((nft) => {
               return (
-                <div key={nft.id.tokenId}>
+                <div
+                  className="flex flex-col items-center justify-center space-y-4"
+                  key={nft.id.tokenId}
+                >
                   <Image
                     className="rounded-xl"
                     width={300}
@@ -84,6 +87,7 @@ export default function Home() {
                     src={nft.media[0].gateway}
                     alt={nft.name}
                   />
+                  <Button color="black">VIEW</Button>
                 </div>
               );
             })}
