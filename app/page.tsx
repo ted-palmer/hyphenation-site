@@ -57,20 +57,21 @@ export default function Home() {
 
   return (
     <div className="flex-col items-center justify-between">
-      <div className="flex flex-col items-center space-y-12">
-        <Image width={383} src={Logo} alt="Hyphen Logo" />
-        <Image width={383} src={AdoptAHiphen} alt="Hyphen Logo" />
+      <div className="flex flex-col items-center space-y-9 sm:space-y-12">
+        <div className="w-[16.5rem] space-y-9 sm:w-[24rem] sm:space-y-12">
+          <Image width={383} src={Logo} alt="Hyphen Logo" />
+          <Image width={383} src={AdoptAHiphen} alt="Hyphen Logo" />
+        </div>
 
-        <div className="flex w-full max-w-[53rem] flex-col space-y-12">
-          <span className="text-left text-lg text-white">
+        <div className="flex w-full max-w-[53rem] flex-col space-y-12 text-white sm:text-lg">
+          <span>
             With each passing day, more and more people are switching from “on-chain” to “onchain.”
             While this may seem like a harmless choice, thousands of innocent hyphens are losing
             their place in the world. No longer needed to hold “on-chain” together, these hyphens
             are in need of a loving place to call home. What if you could make a difference in a
             hyphen’s life forever?
-          </span>
-
-          <span className="text-left text-lg text-white">
+            <br />
+            <br />
             Introducing the Adopt-a-Hyphen program. For the next 3 days, you can adopt a hyphen and
             give it a new home…right in your wallet! To adopt a hyphen, simply mint an Adoption
             Ticket. Each Adoption Ticket can be redeemed to adopt one hyphen. As is their nature,
@@ -91,11 +92,11 @@ export default function Home() {
 
         {/* Mint/Approval a hyphen box */}
         <MintBox />
-        <ApprovalBox />
+        {isApprovedForAll ? <ApprovalBox /> : null}
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (
-          <div className="grid gap-24 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid gap-9 sm:gap-24 md:grid-cols-3 lg:grid-cols-4">
             {nfts.map((nft) => {
               return (
                 <div

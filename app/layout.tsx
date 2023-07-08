@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <Navbar />
           <Toaster />
-          <main className={'mx-auto w-full max-w-[100rem] grow p-6 md:px-20 md:py-16'}>
+          <main className={'mx-auto w-full max-w-[100rem] grow p-4 md:px-20 md:py-16'}>
             {children}
           </main>
           <Footer />
