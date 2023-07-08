@@ -3,10 +3,8 @@
 import Image from 'next/image';
 
 import { useToast } from '../hooks/useToast';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { parseEther } from 'viem';
 import {
-  mainnet,
   useAccount,
   useContractWrite,
   useNetwork,
@@ -16,8 +14,10 @@ import {
 } from 'wagmi';
 
 import AdoptionTicket from '@/public/adoption-ticket.svg';
+import Zora from '@/public/zora.svg';
 
 import ZORA_ABI from '@/lib/abis/zora';
+import LINKS from '@/lib/constants/links';
 
 import Button from '@/components/common/button';
 
@@ -87,17 +87,14 @@ const MintBox = () => {
       <div className="text-center text-xs text-white md:text-sm">
         Mint an Adoption Ticket to get started!
       </div>
-      {!chain ? (
-        <ConnectButton />
-      ) : chain.id != mainnet.id ? (
-        <Button onClick={() => switchNetwork?.(mainnet.id)} color="blue">
-          Switch Chain
-        </Button>
-      ) : (
-        <Button onClick={() => write?.()} color="blue">
-          Mint
-        </Button>
-      )}
+      <Button
+        className="w-fit px-4"
+        leftIcon={<Image alt="Zora Logo" src={Zora} />}
+        href={LINKS.ZORA}
+        color="blue"
+      >
+        MINT ON ZORA
+      </Button>
     </div>
   );
 };

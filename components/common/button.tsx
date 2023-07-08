@@ -2,10 +2,11 @@ import { cva } from 'class-variance-authority';
 import { twMerge } from 'tailwind-merge';
 
 type ButtonProps = JSX.IntrinsicElements['button'] & {
-  color?: 'blue' | 'white' | 'black';
+  color?: 'blue' | 'white' | 'black' | 'transparent';
   leftIcon?: React.ReactNode;
   className?: string;
   href?: string;
+  isIcon?: boolean;
 };
 
 const buttonVariants = cva(
@@ -28,6 +29,7 @@ const buttonVariants = cva(
         blue: 'bg-background text-white hover:bg-blue-600 active:bg-blue-700',
         white: 'bg-white text-black hover:bg-gray-100 active:bg-gray-200',
         black: 'bg-black text-white hover:bg-gray-800 active:bg-gray-900',
+        transparent: 'bg-transparent',
       },
       size: {
         sm: ['text-sm', 'px-6', 'py-2'],
@@ -43,6 +45,7 @@ const Button = ({
   leftIcon,
   className,
   href,
+  isIcon,
   onClick,
   ...props
 }: ButtonProps) => {
@@ -52,7 +55,7 @@ const Button = ({
       className={twMerge(buttonVariants({ color, size: 'lg' }), className)}
       {...props}
     >
-      {leftIcon ? <span className="mr-2">{leftIcon}</span> : null}
+      {leftIcon ? <span className="mr-4">{leftIcon}</span> : null}
       {children}
     </button>
   );

@@ -3,16 +3,12 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { mainnet, useAccount, useContractRead, useNetwork } from 'wagmi';
+import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
 import AdoptAHiphen from '@/public/adopt-a-hyphen.svg';
 import Logo from '@/public/hyphen-logo.svg';
-import Opensea from '@/public/opensea.svg';
-import Party from '@/public/party-vs-party.svg';
-import Zora from '@/public/zora.svg';
 
 import ZORA_ABI from '@/lib/abis/zora';
-import LINKS from '@/lib/constants/links';
 
 import ApprovalBox from '@/components/approval-box';
 import Button from '@/components/common/button';
@@ -36,6 +32,14 @@ export default function Home() {
     args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
   });
 
+  const { data: totalSupply } = useContractRead({
+    address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
+    abi: ZORA_ABI,
+    functionName: 'totalSupply',
+  });
+
+  console.log(totalSupply);
+
   useEffect(() => {
     async function fetchNfts() {
       if (address) {
@@ -52,42 +56,42 @@ export default function Home() {
   }, [address, chain]);
 
   return (
-    <main className="flex-col items-center justify-between">
+    <div className="flex-col items-center justify-between">
       <div className="flex flex-col items-center space-y-12">
-        <Image width={300} src={Logo} alt="Hyphen Logo" />
-        <Image width={300} src={AdoptAHiphen} alt="Hyphen Logo" />
-        <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
-          <Button
-            href={LINKS.PARTY_VS_PARTY}
-            className="px-4"
-            leftIcon={<Image alt="Party Logo" src={Party} />}
-            color="white"
-          >
-            PARTY VS PARTY
-          </Button>
-          <Button
-            href={LINKS.ZORA}
-            className="px-4"
-            leftIcon={<Image alt="Zora Logo" src={Zora} />}
-            color="white"
-          >
-            MINT ON ZORA
-          </Button>
-          <Button
-            href={LINKS.OPENSEA}
-            leftIcon={<Image alt="Opensea Logo" src={Opensea} />}
-            className="px-4"
-            color="white"
-          >
-            VIEW ON OPENSEA
-          </Button>
+        <Image width={383} src={Logo} alt="Hyphen Logo" />
+        <Image width={383} src={AdoptAHiphen} alt="Hyphen Logo" />
+
+        <div className="flex w-full max-w-[53rem] flex-col space-y-12">
+          <span className="text-left text-lg text-white">
+            With each passing day, more and more people are switching from “on-chain” to “onchain.”
+            While this may seem like a harmless choice, thousands of innocent hyphens are losing
+            their place in the world. No longer needed to hold “on-chain” together, these hyphens
+            are in need of a loving place to call home. What if you could make a difference in a
+            hyphen’s life forever?
+          </span>
+
+          <span className="text-left text-lg text-white">
+            Introducing the Adopt-a-Hyphen program. For the next 3 days, you can adopt a hyphen and
+            give it a new home…right in your wallet! To adopt a hyphen, simply mint an Adoption
+            Ticket. Each Adoption Ticket can be redeemed to adopt one hyphen. As is their nature,
+            each hyphen lives fully on-chain and is rendered in solidity as cute, generative ASCII
+            art. Upon redeeming your Adoption Ticket, you’ll enjoy the surprise of finding out what
+            kind of hyphen you got!
+          </span>
         </div>
+
+        <div className="flex items-center justify-center rounded-lg border border-black bg-white p-2 text-sm text-black">
+          {/* Hyphens Saved */}
+          {/* @TODO fix type */}
+          <div className="mr-2.5 flex items-center justify-center rounded bg-black p-1 px-3 text-[#00BA73]">
+            {totalSupply ? parseInt(totalSupply as string) : '-'}
+          </div>
+          hyphens saved
+        </div>
+
         {/* Mint/Approval a hyphen box */}
-        {nfts.length === 0 || chain?.id != mainnet.id ? (
-          <MintBox />
-        ) : isApprovedForAll ? (
-          <ApprovalBox />
-        ) : null}
+        <MintBox />
+        <ApprovalBox />
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (
@@ -112,6 +116,6 @@ export default function Home() {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

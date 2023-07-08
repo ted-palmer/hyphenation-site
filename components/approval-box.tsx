@@ -24,7 +24,7 @@ const ApprovalBox = () => {
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
     functionName: 'setApprovalForAll',
-    args: [process.env.NEXT_PUBLIC_ADOPT_ADDRESS, false],
+    args: [process.env.NEXT_PUBLIC_ADOPT_ADDRESS, true],
     chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 

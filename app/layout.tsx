@@ -5,6 +5,8 @@ import { Providers } from './providers';
 import clsx from 'clsx';
 
 import { Toaster } from '@/components/common/toaster';
+import Footer from '@/components/footer';
+import Navbar from '@/components/nav-bar';
 
 /* Fonts */
 const martianMono = Martian_Mono({ subsets: ['latin'] });
@@ -20,10 +22,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={clsx(martianMono.className, 'bg-background')}>
         <Providers>
+          <Navbar />
           <Toaster />
-          <div className={'mx-auto w-full max-w-[100rem] grow p-4 md:px-20 md:py-16'}>
+          <main className={'mx-auto w-full max-w-[100rem] grow p-6 md:px-20 md:py-16'}>
             {children}
-          </div>
+          </main>
+          <Footer />
         </Providers>
       </body>
     </html>
