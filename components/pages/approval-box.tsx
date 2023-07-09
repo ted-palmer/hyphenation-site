@@ -1,6 +1,7 @@
 'use client';
 
 import { useToast } from '@/hooks/useToast';
+import { Transition } from '@headlessui/react';
 import {
   useAccount,
   useContractRead,
@@ -76,27 +77,33 @@ const ApprovalBox = () => {
     },
   });
 
-  if (isApprovedForAll) {
-    return null;
-  }
-
   return (
-    <div className="flex w-full max-w-[38rem] flex-col items-center space-y-4 rounded-3xl bg-black p-6 font-martian">
-      <div className="text-2xl font-medium text-white">ENABLE REDEMPTIONS</div>
-      <div className="text-center text-xs text-white md:text-sm">
-        Approve your Adoption Tickets to enable redemption.
+    <Transition
+      show={!isApprovedForAll}
+      enter="transition-opacity duration-150"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="transition-opacity duration-400"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0"
+    >
+      <div className="flex w-full max-w-[38rem] flex-col items-center space-y-4 rounded-3xl bg-black p-6 font-martian">
+        <div className="text-2xl font-medium text-white">ENABLE REDEMPTIONS</div>
+        <div className="text-center text-xs text-white md:text-sm">
+          Approve your Adoption Tickets to enable redemption.
+        </div>
+        <Button
+          disabled={isSignLoading || isSignSuccess || isTxLoading || isTxSuccess}
+          onClick={() => write?.()}
+          color="blue"
+        >
+          {isSignLoading && 'CONFIRM'}
+          {(isSignSuccess || isTxLoading) && 'APPROVING'}
+          {isTxSuccess && 'APPROVED!'}
+          {!isSignLoading && !isSignSuccess && !isTxSuccess && !isTxLoading && 'APPROVE'}
+        </Button>
       </div>
-      <Button
-        disabled={isSignLoading || isSignSuccess || isTxLoading || isTxSuccess}
-        onClick={() => write?.()}
-        color="blue"
-      >
-        {isSignLoading && 'CONFIRM'}
-        {(isSignSuccess || isTxLoading) && 'APPROVING'}
-        {isTxSuccess && 'APPROVED!'}
-        {!isSignLoading && !isSignSuccess && !isTxSuccess && !isTxLoading && 'APPROVE'}
-      </Button>
-    </div>
+    </Transition>
   );
 };
 
