@@ -14,8 +14,27 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 /* Metadata & SEO */
 export const metadata = {
-  title: 'Hyphen Site',
-  description: 'Mint a hyphen.',
+  title: 'Adopt-A-Hyphen',
+  description: 'What if you could make a difference in a hyphen’s life forever?',
+  openGraph: {
+    title: 'Adopt-A-Hyphen',
+    description: 'What if you could make a difference in a hyphen’s life forever?',
+    url: 'https://adopt-a-hyphen.com',
+    siteName: 'Adopt-A-Hyphen',
+    images: [
+      {
+        url: '/social-image.png',
+        width: 1200,
+        height: 600,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['https://adopt-a-hyphen.com/social-image.png'],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
