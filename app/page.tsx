@@ -33,7 +33,6 @@ export default function Home() {
     if (address) {
       const res = await fetch(`/api/fetchNFTs?address=${address}`);
       const data = await res.json();
-      console.log(data.ownedNfts);
       setNfts(data.ownedNfts);
     }
 
