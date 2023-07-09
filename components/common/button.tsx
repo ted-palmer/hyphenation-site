@@ -4,7 +4,6 @@ import { twMerge } from 'tailwind-merge';
 type ButtonProps = JSX.IntrinsicElements['button'] & {
   color?: 'blue' | 'white' | 'black' | 'transparent';
   leftIcon?: React.ReactNode;
-  className?: string;
   href?: string;
   isIcon?: boolean;
   size?: 'sm' | 'lg';
@@ -38,6 +37,10 @@ const buttonVariants = cva(
         sm: ['text-sm', 'px-6', 'py-2'],
         lg: ['text-base', 'px-8', 'py-3'],
       },
+      disabled: {
+        true: 'aria-disabled cursor-not-allowed bg-gray-500 text-gray-900',
+        false: '',
+      },
     },
   },
 );
@@ -50,13 +53,18 @@ const Button = ({
   href,
   isIcon,
   onClick,
+  disabled,
   size = 'lg',
   ...props
 }: ButtonProps) => {
   return (
     <button
+      disabled={disabled}
       onClick={href ? () => window.open(href, '_blank') : onClick}
-      className={twMerge(buttonVariants({ color, size: 'lg' }), className)}
+      className={twMerge(
+        buttonVariants({ color: !disabled ? color : undefined, size: 'lg', disabled }),
+        className,
+      )}
       {...props}
     >
       {leftIcon ? <span className="mr-4">{leftIcon}</span> : null}

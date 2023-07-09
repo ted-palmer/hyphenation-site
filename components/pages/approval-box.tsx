@@ -1,20 +1,30 @@
 'use client';
 
-import { useState } from 'react';
-
 import { useToast } from '@/hooks/useToast';
-import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 
 import ZORA_ABI from '@/lib/abis/zora';
 
 import Button from '@/components/common/button';
 
 const ApprovalBox = () => {
-  const [isApprovedForAll, setIsApprovedForAll] = useState(false);
-
   const { toast } = useToast();
+  const { address } = useAccount();
 
   /* Contract interaction */
+  const { data: isApprovedForAll, refetch: refetchApprovalStatus } = useContractRead({
+    address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
+    abi: ZORA_ABI,
+    functionName: 'isApprovedForAll',
+    args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+  });
+
   const { config, error } = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
@@ -23,7 +33,13 @@ const ApprovalBox = () => {
     chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
-  const { data, write, reset } = useContractWrite({
+  const {
+    data,
+    write,
+    reset,
+    isLoading: isSignLoading,
+    isSuccess: isSignSuccess,
+  } = useContractWrite({
     ...config,
     onError: () => {
       toast({
@@ -40,7 +56,7 @@ const ApprovalBox = () => {
     },
   });
 
-  useWaitForTransaction({
+  const { isLoading: isTxLoading, isSuccess: isTxSuccess } = useWaitForTransaction({
     hash: data?.hash,
     onError: () => {
       toast({
@@ -55,7 +71,7 @@ const ApprovalBox = () => {
         variant: 'success',
         title: 'Transaction success!',
       });
-      setIsApprovedForAll(true);
+      refetchApprovalStatus();
       reset();
     },
   });
@@ -70,8 +86,15 @@ const ApprovalBox = () => {
       <div className="text-center text-xs text-white md:text-sm">
         Approve your Adoption Tickets to enable redemption.
       </div>
-      <Button onClick={() => write?.()} color="blue">
-        APPROVE ALL
+      <Button
+        disabled={isSignLoading || isSignSuccess || isTxLoading || isTxSuccess}
+        onClick={() => write?.()}
+        color="blue"
+      >
+        {isSignLoading && 'CONFIRM'}
+        {(isSignSuccess || isTxLoading) && 'APPROVING'}
+        {isTxSuccess && 'APPROVED!'}
+        {!isSignLoading && !isSignSuccess && !isTxSuccess && !isTxLoading && 'APPROVE'}
       </Button>
     </div>
   );
