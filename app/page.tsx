@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import { fromHex } from 'viem';
 import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
 import AdoptAHiphen from '@/public/adopt-a-hyphen.svg';
@@ -32,6 +33,7 @@ export default function Home() {
     if (address) {
       const res = await fetch(`/api/fetchNFTs?address=${address}`);
       const data = await res.json();
+      console.log(data.ownedNfts);
       setNfts(data.ownedNfts);
     }
 
@@ -85,6 +87,7 @@ export default function Home() {
         {isLoaded && nfts.length > 0 && (
           <div className="grid gap-9 sm:gap-24 md:grid-cols-3 lg:grid-cols-4">
             {nfts.map((nft) => {
+              const tokenId = fromHex(nft.id.tokenId, 'number');
               return (
                 <div
                   className="flex flex-col items-center justify-center space-y-4"
@@ -108,7 +111,7 @@ export default function Home() {
                         window.open(
                           // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
                           // @TODO: switch to mainnet
-                          `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`,
+                          `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
                           '_blank',
                         );
                       }}
