@@ -13,6 +13,7 @@ import ZORA_ABI from '@/lib/abis/zora';
 import Button from '@/components/common/button';
 import ApprovalBox from '@/components/pages/approval-box';
 import MintBox from '@/components/pages/mint-box';
+import MintButton from '@/components/pages/mint-button';
 
 export default function Home() {
   const { address } = useAccount();
@@ -33,17 +34,17 @@ export default function Home() {
     functionName: 'totalSupply',
   });
 
-  useEffect(() => {
-    async function fetchNfts() {
-      if (address) {
-        const res = await fetch(`/api/fetchNFTs?address=${address}`);
-        const data = await res.json();
-        setNfts(data.ownedNfts);
-      }
-
-      setIsLoaded(true);
+  async function fetchNfts() {
+    if (address) {
+      const res = await fetch(`/api/fetchNFTs?address=${address}`);
+      const data = await res.json();
+      setNfts(data.ownedNfts);
     }
 
+    setIsLoaded(true);
+  }
+
+  useEffect(() => {
     fetchNfts();
   }, [address, chain]);
 
@@ -84,7 +85,7 @@ export default function Home() {
 
         {/* Mint/Approval a hyphen box */}
         <MintBox />
-        {isApprovedForAll ? <ApprovalBox /> : null}
+        {!isApprovedForAll ? <ApprovalBox /> : null}
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (
@@ -102,7 +103,25 @@ export default function Home() {
                     src={nft.media[0].gateway}
                     alt={nft.name}
                   />
-                  <Button color="black">VIEW</Button>
+
+                  {nft?.contract?.address?.toLowerCase() ==
+                  process.env.NEXT_PUBLIC_TICKET_ADDRESS?.toLowerCase() ? (
+                    <MintButton tokenId={parseInt(nft?.id?.tokenId)} fetchNfts={fetchNfts} />
+                  ) : (
+                    <Button
+                      color="black"
+                      onClick={() => {
+                        window.open(
+                          // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
+                          // @TODO: switch to mainnet
+                          `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`,
+                          '_blank',
+                        );
+                      }}
+                    >
+                      VIEW
+                    </Button>
+                  )}
                 </div>
               );
             })}

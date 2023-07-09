@@ -1,4 +1,4 @@
-export const ADOPT_A_HYPEN_ABI = [
+export const ADOPT_A_HYPHEN_ABI = [
   {
     inputs: [
       {
@@ -433,3 +433,5 @@ export const ADOPT_A_HYPEN_ABI = [
     type: 'function',
   },
 ];
+
+export default ADOPT_A_HYPHEN_ABI;

@@ -24,6 +24,7 @@ const buttonVariants = cva(
     'flex',
     'items-center',
     'justify-center',
+    'disabled:cursor-not-allowed',
   ],
   {
     variants: {
