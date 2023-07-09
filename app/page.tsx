@@ -31,7 +31,8 @@ export default function Home() {
   const { data: totalSupply } = useContractRead({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
-    functionName: 'totalSupply',
+    functionName: 'balanceOf',
+    args: [process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
   });
 
   async function fetchNfts() {
@@ -78,7 +79,7 @@ export default function Home() {
           {/* Hyphens Saved */}
           {/* @TODO fix type */}
           <div className="mr-2.5 flex items-center justify-center rounded bg-black p-1 px-3 text-[#00BA73]">
-            {totalSupply ? parseInt(totalSupply as string) : '-'}
+            {totalSupply ? parseInt(totalSupply as string).toLocaleString() : '-'}
           </div>
           hyphens saved
         </div>

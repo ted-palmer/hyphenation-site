@@ -64,7 +64,7 @@ const MintButton: FC<Props> = ({ tokenId, fetchNfts }) => {
         title: 'Mint success!',
         action: data?.hash ? (
           <a
-            href={`https://goerli.etherscan.io//tx/${data?.hash}`}
+            href={`https://goerli.etherscan.io//tx/${data?.hash}`} //@TODO: switch to mainnet
             target="_blank"
             className="text-xs text-black"
           >
