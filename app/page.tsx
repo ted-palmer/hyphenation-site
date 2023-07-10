@@ -154,9 +154,7 @@ export default function Home() {
                         color="black"
                         onClick={() => {
                           window.open(
-                            // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
-                            // @TODO: switch to mainnet
-                            `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
+                            `https://opensea.io/assets/ethereum/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
                             '_blank',
                           );
                         }}
