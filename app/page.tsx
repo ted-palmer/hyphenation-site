@@ -52,7 +52,7 @@ export default function Home() {
           <Image width={383} src={AdoptAHiphen} alt="adope a hyphen logo" />
         </div>
 
-        <div className="flex w-full max-w-[53rem] flex-col space-y-12 font-inter text-white">
+        <div className="flex w-full max-w-[53rem] flex-col space-y-12 font-inter text-lg text-white">
           <span>
             With each passing day, more and more people are switching from “on-chain” to “onchain.”
             While this may seem like a harmless choice, thousands of innocent hyphens are losing
@@ -81,7 +81,7 @@ export default function Home() {
 
         {/* Mint/Approval a hyphen box */}
         <MintBox />
-        <ApprovalBox />
+        {nfts.length > 0 ? <ApprovalBox /> : null}
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (
