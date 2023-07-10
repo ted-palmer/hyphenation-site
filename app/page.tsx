@@ -33,11 +33,21 @@ export default function Home() {
     chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
+  const { data: isApprovedForAll, refetch: refetchApprovalStatus } = useContractRead({
+    address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
+    abi: ZORA_ABI,
+    functionName: 'isApprovedForAll',
+    args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+    chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
+  });
+
   async function fetchNfts() {
     if (address) {
       const res = await fetch(`/api/fetchNFTs?address=${address}`);
       const data = await res.json();
       setNfts(data.ownedNfts);
+    } else {
+      setNfts([]);
     }
 
     setIsLoaded(true);
@@ -98,7 +108,12 @@ export default function Home() {
 
         {/* Mint/Approval a hyphen box */}
         <MintBox />
-        {nfts.length > 0 ? <ApprovalBox /> : null}
+        {nfts.length > 0 && address ? (
+          <ApprovalBox
+            isApprovedForAll={Boolean(isApprovedForAll)}
+            refetchApprovalStatus={refetchApprovalStatus}
+          />
+        ) : null}
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (
@@ -125,6 +140,7 @@ export default function Home() {
                         tokenId={parseInt(nft?.id?.tokenId)}
                         fetchNfts={fetchNfts}
                         setShowConfetti={setShowConfetti}
+                        isApprovedForAll={Boolean(isApprovedForAll)}
                       />
                     </>
                   ) : (
@@ -138,9 +154,7 @@ export default function Home() {
                         color="black"
                         onClick={() => {
                           window.open(
-                            // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
-                            // @TODO: switch to mainnet
-                            `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
+                            `https://opensea.io/assets/ethereum/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
                             '_blank',
                           );
                         }}

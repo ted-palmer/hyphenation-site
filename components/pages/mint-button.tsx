@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, SetStateAction } from 'react';
+import { FC, SetStateAction, useEffect } from 'react';
 
 import { useToast } from '@/hooks/useToast';
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
@@ -11,20 +11,27 @@ import Button from '@/components/common/button';
 
 type Props = {
   tokenId: number;
+  isApprovedForAll: boolean;
   fetchNfts(): Promise<void>;
   setShowConfetti: (value: SetStateAction<boolean>) => void;
 };
 
-const MintButton: FC<Props> = ({ tokenId, fetchNfts, setShowConfetti }) => {
+const MintButton: FC<Props> = ({ tokenId, isApprovedForAll, fetchNfts, setShowConfetti }) => {
   const { toast } = useToast();
 
-  const { config, error } = usePrepareContractWrite({
+  const { config, error, refetch } = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_ADOPT_ADDRESS,
     abi: ADOPT_A_HYPHEN_ABI,
     functionName: 'mint',
     args: [tokenId],
     chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
+
+  useEffect(() => {
+    if (isApprovedForAll) {
+      refetch();
+    }
+  }, [isApprovedForAll, refetch]);
 
   const {
     data,
@@ -65,7 +72,7 @@ const MintButton: FC<Props> = ({ tokenId, fetchNfts, setShowConfetti }) => {
         title: 'Mint success!',
         action: data?.hash ? (
           <a
-            href={`https://goerli.etherscan.io//tx/${data?.hash}`} //@TODO: switch to mainnet
+            href={`https://etherscan.io/tx/${data?.hash}`}
             target="_blank"
             className="text-xs text-black"
           >

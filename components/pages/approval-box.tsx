@@ -1,9 +1,10 @@
 'use client';
 
+import { FC } from 'react';
+
 import { useToast } from '@/hooks/useToast';
 import { Transition } from '@headlessui/react';
 import {
-  useAccount,
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
@@ -14,19 +15,15 @@ import ZORA_ABI from '@/lib/abis/zora';
 
 import Button from '@/components/common/button';
 
-const ApprovalBox = () => {
+type Props = {
+  isApprovedForAll: boolean;
+  refetchApprovalStatus: ReturnType<typeof useContractRead>['refetch'];
+};
+
+const ApprovalBox: FC<Props> = ({ isApprovedForAll, refetchApprovalStatus }) => {
   const { toast } = useToast();
-  const { address } = useAccount();
 
   /* Contract interaction */
-  const { data: isApprovedForAll, refetch: refetchApprovalStatus } = useContractRead({
-    address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
-    abi: ZORA_ABI,
-    functionName: 'isApprovedForAll',
-    args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
-    chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
-  });
-
   const { config, error } = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
