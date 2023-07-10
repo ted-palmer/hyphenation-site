@@ -12,7 +12,7 @@ import LINKS from '@/lib/constants/links';
 
 const Footer = () => {
   return (
-    <div className="flex w-full items-center justify-center space-x-6 space-y-2 p-12">
+    <div className="flex w-full items-center justify-center space-x-6 p-12">
       <Button href={LINKS.ZORA} className="p-0" color="transparent">
         <Image alt="Zora Logo" src={ZoraWhite} />
       </Button>
