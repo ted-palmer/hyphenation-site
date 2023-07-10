@@ -24,6 +24,7 @@ const ApprovalBox = () => {
     abi: ZORA_ABI,
     functionName: 'isApprovedForAll',
     args: [address, process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+    chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
   const { config, error } = usePrepareContractWrite({

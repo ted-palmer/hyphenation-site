@@ -6,7 +6,7 @@ type ButtonProps = JSX.IntrinsicElements['button'] & {
   leftIcon?: React.ReactNode;
   href?: string;
   isIcon?: boolean;
-  size?: 'xs' | 'sm' | 'lg';
+  size?: 'sm' | 'lg';
 };
 
 const buttonVariants = cva(
@@ -34,7 +34,6 @@ const buttonVariants = cva(
         transparent: 'bg-transparent',
       },
       size: {
-        xs: ['text-xs', 'px-4', 'py-2'],
         sm: ['text-sm', 'px-6', 'py-2'],
         lg: ['text-base', 'px-8', 'py-3'],
       },

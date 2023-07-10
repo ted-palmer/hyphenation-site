@@ -28,6 +28,7 @@ export default function Home() {
     abi: ZORA_ABI,
     functionName: 'balanceOf',
     args: [process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+    chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
   async function fetchNfts() {
