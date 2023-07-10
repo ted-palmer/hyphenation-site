@@ -8,6 +8,7 @@ import { fromHex } from 'viem';
 import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
 import AdoptAHiphen from '@/public/adopt-a-hyphen.svg';
+import AdoptionTicket from '@/public/adoption-ticket.svg';
 import Logo from '@/public/hyphen-logo.svg';
 
 import ZORA_ABI from '@/lib/abis/zora';
@@ -132,7 +133,7 @@ export default function Home() {
                         className="rounded-xl"
                         width={300}
                         height={300}
-                        src={nft.media[0].gateway}
+                        src={AdoptionTicket}
                         alt={nft.name}
                       />
 
