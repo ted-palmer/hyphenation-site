@@ -30,7 +30,7 @@ const TokenUriImage: FC<Props> = ({ tokenId, fallbackImage }) => {
           const response = await fetch(tokenURI as string);
 
           if (!response.ok) {
-            console.log('Failed to resolve tokenURI');
+            console.error('Failed to resolve tokenURI');
           }
 
           const json = await response.json();

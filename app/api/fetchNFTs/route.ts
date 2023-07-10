@@ -4,11 +4,6 @@ export async function GET(req: Request, res: Response) {
   const { searchParams } = new URL(req.url);
   const address = searchParams.get('address');
 
-  console.log(process.env.NEXT_PUBLIC_ALCHEMY_ID);
-  console.log(address);
-  console.log(process.env.NEXT_PUBLIC_TICKET_ADDRESS);
-  console.log(process.env.NEXT_PUBLIC_ADOPT_ADDRESS);
-
   const result = await fetch(
     // `https://eth-mainnet.g.alchemy.com/nft/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}/getNFTs?owner=${address}&contractAddresses[]=${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}&${process.env.NEXT_PUBLIC_TICKET_ADDRESS}&order_direction=desc&offset=0&limit=20`,
     // @TODO: switch back to mainnet
