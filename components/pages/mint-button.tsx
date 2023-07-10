@@ -1,9 +1,8 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, SetStateAction } from 'react';
 
 import { useToast } from '@/hooks/useToast';
-import Confetti from 'react-confetti';
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 
 import ADOPT_A_HYPHEN_ABI from '@/lib/abis/adopt-a-hyphen';
@@ -13,9 +12,10 @@ import Button from '@/components/common/button';
 type Props = {
   tokenId: number;
   fetchNfts(): Promise<void>;
+  setShowConfetti: (value: SetStateAction<boolean>) => void;
 };
 
-const MintButton: FC<Props> = ({ tokenId, fetchNfts }) => {
+const MintButton: FC<Props> = ({ tokenId, fetchNfts, setShowConfetti }) => {
   const { toast } = useToast();
 
   const { config, error } = usePrepareContractWrite({
@@ -74,6 +74,7 @@ const MintButton: FC<Props> = ({ tokenId, fetchNfts }) => {
         ) : undefined,
       });
       fetchNfts();
+      setShowConfetti(true);
       reset();
     },
   });
@@ -82,12 +83,6 @@ const MintButton: FC<Props> = ({ tokenId, fetchNfts }) => {
 
   return (
     <>
-      {/* <Confetti
-        width={window?.innerWidth}
-        height={window?.innerHeight}
-        style={{ pointerEvents: 'none' }}
-        numberOfPieces={500}
-      /> */}
       <Button
         color="black"
         onClick={() => {

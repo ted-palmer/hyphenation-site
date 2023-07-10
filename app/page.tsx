@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import Confetti from 'react-confetti';
 import { fromHex } from 'viem';
 import { useAccount, useContractRead, useNetwork } from 'wagmi';
 
@@ -22,6 +23,7 @@ export default function Home() {
   const { chain } = useNetwork();
   const [nfts, setNfts] = useState<any[]>([]); // TODO: Type this
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const { data: totalSupply } = useContractRead({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
@@ -80,6 +82,20 @@ export default function Home() {
           hyphens saved
         </div>
 
+        {/* Confetti */}
+        <Confetti
+          colors={['#000', '#fff']}
+          className="fixed w-screen"
+          style={{ position: 'fixed', height: 'calc(100vh + 100px)', top: -100 }}
+          numberOfPieces={showConfetti ? 500 : 0}
+          recycle={false}
+          onConfettiComplete={(confetti) => {
+            setShowConfetti(false);
+            confetti?.reset();
+          }}
+          drawShape={(ctx) => ctx.fillRect(0, 0, 20, 5)}
+        />
+
         {/* Mint/Approval a hyphen box */}
         <MintBox />
         {nfts.length > 0 ? <ApprovalBox /> : null}
@@ -105,7 +121,11 @@ export default function Home() {
                         alt={nft.name}
                       />
 
-                      <MintButton tokenId={parseInt(nft?.id?.tokenId)} fetchNfts={fetchNfts} />
+                      <MintButton
+                        tokenId={parseInt(nft?.id?.tokenId)}
+                        fetchNfts={fetchNfts}
+                        setShowConfetti={setShowConfetti}
+                      />
                     </>
                   ) : (
                     <>
