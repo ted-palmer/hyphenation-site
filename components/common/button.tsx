@@ -62,7 +62,7 @@ const Button = ({
       disabled={disabled}
       onClick={href ? () => window.open(href, '_blank') : onClick}
       className={twMerge(
-        buttonVariants({ color: !disabled ? color : undefined, size: 'lg', disabled }),
+        buttonVariants({ color: !disabled ? color : undefined, size, disabled }),
         className,
       )}
       {...props}

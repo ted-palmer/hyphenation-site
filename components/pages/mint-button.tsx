@@ -3,6 +3,7 @@
 import { FC } from 'react';
 
 import { useToast } from '@/hooks/useToast';
+import Confetti from 'react-confetti';
 import { useContractWrite, usePrepareContractWrite, useWaitForTransaction } from 'wagmi';
 
 import ADOPT_A_HYPHEN_ABI from '@/lib/abis/adopt-a-hyphen';
@@ -80,18 +81,26 @@ const MintButton: FC<Props> = ({ tokenId, fetchNfts }) => {
   const isMinted = txSuccess;
 
   return (
-    <Button
-      color="black"
-      onClick={() => {
-        mint?.();
-      }}
-      disabled={!mint || isMintLoading || isMintStarted || isMinted}
-    >
-      {isMintLoading && 'CONFIRM'}
-      {isMintStarted && !isMinted && 'REDEEMING'}
-      {!isMintLoading && isMintStarted && isMinted && 'REDEEMED!'}
-      {!isMintLoading && !isMintStarted && !isMinted && 'REDEEM'}
-    </Button>
+    <>
+      {/* <Confetti
+        width={window?.innerWidth}
+        height={window?.innerHeight}
+        style={{ pointerEvents: 'none' }}
+        numberOfPieces={500}
+      /> */}
+      <Button
+        color="black"
+        onClick={() => {
+          mint?.();
+        }}
+        disabled={!mint || isMintLoading || isMintStarted || isMinted}
+      >
+        {isMintLoading && 'CONFIRM'}
+        {isMintStarted && !isMinted && 'REDEEMING'}
+        {!isMintLoading && isMintStarted && isMinted && 'REDEEMED!'}
+        {!isMintLoading && !isMintStarted && !isMinted && 'REDEEM'}
+      </Button>
+    </>
   );
 };
 

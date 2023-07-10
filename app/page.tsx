@@ -15,6 +15,7 @@ import Button from '@/components/common/button';
 import ApprovalBox from '@/components/pages/approval-box';
 import MintBox from '@/components/pages/mint-box';
 import MintButton from '@/components/pages/mint-button';
+import TokenUriImage from '@/components/pages/token-uri-image';
 
 export default function Home() {
   const { address } = useAccount();
@@ -27,6 +28,7 @@ export default function Home() {
     abi: ZORA_ABI,
     functionName: 'balanceOf',
     args: [process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+    chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
   async function fetchNfts() {
@@ -51,7 +53,7 @@ export default function Home() {
           <Image width={383} src={AdoptAHiphen} alt="adope a hyphen logo" />
         </div>
 
-        <div className="flex w-full max-w-[53rem] flex-col space-y-12 font-inter text-white">
+        <div className="flex w-full max-w-[53rem] flex-col space-y-12 font-inter text-lg text-white">
           <span>
             With each passing day, more and more people are switching from “on-chain” to “onchain.”
             While this may seem like a harmless choice, thousands of innocent hyphens are losing
@@ -80,7 +82,7 @@ export default function Home() {
 
         {/* Mint/Approval a hyphen box */}
         <MintBox />
-        <ApprovalBox />
+        {nfts.length > 0 ? <ApprovalBox /> : null}
 
         {/* NFTs */}
         {isLoaded && nfts.length > 0 && (
@@ -92,31 +94,40 @@ export default function Home() {
                   className="flex flex-col items-center justify-center space-y-4"
                   key={nft.id.tokenId}
                 >
-                  <Image
-                    className="rounded-xl"
-                    width={300}
-                    height={300}
-                    src={nft.media[0].gateway}
-                    alt={nft.name}
-                  />
-
                   {nft?.contract?.address?.toLowerCase() ==
                   process.env.NEXT_PUBLIC_TICKET_ADDRESS?.toLowerCase() ? (
-                    <MintButton tokenId={parseInt(nft?.id?.tokenId)} fetchNfts={fetchNfts} />
+                    <>
+                      <Image
+                        className="rounded-xl"
+                        width={300}
+                        height={300}
+                        src={nft.media[0].gateway}
+                        alt={nft.name}
+                      />
+
+                      <MintButton tokenId={parseInt(nft?.id?.tokenId)} fetchNfts={fetchNfts} />
+                    </>
                   ) : (
-                    <Button
-                      color="black"
-                      onClick={() => {
-                        window.open(
-                          // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
-                          // @TODO: switch to mainnet
-                          `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
-                          '_blank',
-                        );
-                      }}
-                    >
-                      VIEW
-                    </Button>
+                    <>
+                      <TokenUriImage
+                        tokenId={parseInt(nft?.id?.tokenId)}
+                        fallbackImage={nft.media[0].gateway}
+                      />
+
+                      <Button
+                        color="black"
+                        onClick={() => {
+                          window.open(
+                            // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
+                            // @TODO: switch to mainnet
+                            `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
+                            '_blank',
+                          );
+                        }}
+                      >
+                        VIEW
+                      </Button>
+                    </>
                   )}
                 </div>
               );
