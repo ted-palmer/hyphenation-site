@@ -15,6 +15,7 @@ import Button from '@/components/common/button';
 import ApprovalBox from '@/components/pages/approval-box';
 import MintBox from '@/components/pages/mint-box';
 import MintButton from '@/components/pages/mint-button';
+import TokenUriImage from '@/components/pages/token-uri-image';
 
 export default function Home() {
   const { address } = useAccount();
@@ -92,31 +93,40 @@ export default function Home() {
                   className="flex flex-col items-center justify-center space-y-4"
                   key={nft.id.tokenId}
                 >
-                  <Image
-                    className="rounded-xl"
-                    width={300}
-                    height={300}
-                    src={nft.media[0].gateway}
-                    alt={nft.name}
-                  />
-
                   {nft?.contract?.address?.toLowerCase() ==
                   process.env.NEXT_PUBLIC_TICKET_ADDRESS?.toLowerCase() ? (
-                    <MintButton tokenId={parseInt(nft?.id?.tokenId)} fetchNfts={fetchNfts} />
+                    <>
+                      <Image
+                        className="rounded-xl"
+                        width={300}
+                        height={300}
+                        src={nft.media[0].gateway}
+                        alt={nft.name}
+                      />
+
+                      <MintButton tokenId={parseInt(nft?.id?.tokenId)} fetchNfts={fetchNfts} />
+                    </>
                   ) : (
-                    <Button
-                      color="black"
-                      onClick={() => {
-                        window.open(
-                          // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
-                          // @TODO: switch to mainnet
-                          `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
-                          '_blank',
-                        );
-                      }}
-                    >
-                      VIEW
-                    </Button>
+                    <>
+                      <TokenUriImage
+                        tokenId={parseInt(nft?.id?.tokenId)}
+                        fallbackImage={nft.media[0].gateway}
+                      />
+
+                      <Button
+                        color="black"
+                        onClick={() => {
+                          window.open(
+                            // `https://opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}`
+                            // @TODO: switch to mainnet
+                            `https://testnets.opensea.io/assets/goerli/${process.env.NEXT_PUBLIC_ADOPT_ADDRESS}/${tokenId}`,
+                            '_blank',
+                          );
+                        }}
+                      >
+                        VIEW
+                      </Button>
+                    </>
                   )}
                 </div>
               );
