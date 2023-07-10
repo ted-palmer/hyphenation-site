@@ -29,8 +29,7 @@ export default function Home() {
   const { data: totalSupply } = useContractRead({
     address: process.env.NEXT_PUBLIC_TICKET_ADDRESS,
     abi: ZORA_ABI,
-    functionName: 'balanceOf',
-    args: [process.env.NEXT_PUBLIC_ADOPT_ADDRESS],
+    functionName: 'totalSupply',
     chainId: Number(process.env.NEXT_PUBLIC_CHAIN_ID),
   });
 
